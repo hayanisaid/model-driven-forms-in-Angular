@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import  {FormGroup ,FormControl} from '@angular/forms';
+import  {FormGroup ,FormControl,Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +8,12 @@ import  {FormGroup ,FormControl} from '@angular/forms';
 })
 export class AppComponent {
     userForm =new FormGroup({
-     name : new FormControl(),
+     name : new FormControl(null,[Validators.required,Validators.minLength(4),Validators.maxLength(10)]),
     email:new FormControl(),
     adress: new FormGroup({
       street    : new FormControl(),
       city      : new FormControl(),
-      codepostal: new FormControl()
+      codepostal: new FormControl(null,Validators.pattern('[1-9][1-9]{4}$'))
     })
 
     });

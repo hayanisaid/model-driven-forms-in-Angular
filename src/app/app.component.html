@@ -5,7 +5,16 @@
 	<form [formGroup]="userForm" (ngSubmit)='onSubmit()'>
 		<div class="form-group">
 			<label>name</label>
-			<input type="text" class="form-control" formControlName="name">
+			<input type="text"  #RefName class="form-control" formControlName="name">
+			<div *ngIf='userForm.controls["name"].hasError("required") && (RefName.touched || RefName.dirty)' class="alert alert-danger">
+				please Enter the name
+			</div>
+			<div *ngIf="userForm.controls['name'].hasError('minlength')" class="alert alert-danger">
+				please Enter at least 4 Chars
+			</div>
+			<div *ngIf="userForm.controls['name'].hasError('maxlength')" class="alert alert-danger">
+				the name can not exced 10 Chars
+			</div>
 		</div>
 		<div class="form-group">
 			<label>email</label>
@@ -23,10 +32,13 @@
 		<div class="form-group">
 			<label>Code zip</label>
 			<input type="text" class="form-control" formControlName="codepostal">
+			<div *ngIf="userForm.controls['adress'].controls['codepostal'].hasError('pattern')" class="alert alert-danger">
+				Only digit are alowed !
+			</div>
 		</div>
 		</div>
 		
-		<button type="submit" class="btn btn-block btn-primary">
+		<button [disabled]='!userForm.valid' type="submit" class="btn btn-block btn-primary">
 			Submit
 		</button>
 	</form>
